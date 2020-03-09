@@ -1,9 +1,9 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import logo from '../assets/images/logo.svg';
-import { Link } from 'react-router-dom'
 import { Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { connect } from 'react-redux';
 
 class TopNavBar extends React.Component {
 
@@ -11,20 +11,15 @@ class TopNavBar extends React.Component {
         super(props);
 
         var links = ["Login", "Register"];
-        var home = "/"
-
-        if (props.isLoggedIn) {
-            links = [];
-            home = "/home"
-        }
 
         this.state = {
             links: links,
-            home: home
+            home: "/"
         }
     }
 
     render() {
+        const { isAuthenticated } = this.props;
         return (
             <Navbar collapseOnSelect expand="lg" variant="dark" fixed="top">
                 <LinkContainer to={this.state.home}>
@@ -42,10 +37,10 @@ class TopNavBar extends React.Component {
                 <Navbar.Toggle aria-controls="responsiveNavbar" />
                 <Navbar.Collapse id="responsiveNavbar" className="justify-content-end" >
                     {
-                        this.state.links && this.state.links.length > 0 &&
+                        !isAuthenticated && this.state.links &&
                         this.state.links.map(link => {
                             var linkDest = "/" + link.toLowerCase();
-                            return (<LinkContainer to={linkDest}><Nav.Item>{link}</Nav.Item></LinkContainer>)
+                            return (<LinkContainer key={linkDest} to={linkDest}><Nav.Item>{link}</Nav.Item></LinkContainer>)
                         })
                     }
                 </Navbar.Collapse>
@@ -54,4 +49,9 @@ class TopNavBar extends React.Component {
     }
 }
 
-export default TopNavBar;
+function mapStateToProps(state) {
+    return {
+        isAuthenticated: state.auth.isAuthenticated,
+    };
+}
+export default connect(mapStateToProps)(TopNavBar);

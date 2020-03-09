@@ -4,7 +4,6 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Map from '../components/Map';
 import Sighting from '../components/Sighting';
-import TopNavBar from '../navigation/NavBar';
 
 class AllSightings extends React.Component {
 
