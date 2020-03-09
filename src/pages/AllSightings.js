@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Map from '../components/Map';
 import Sighting from '../components/Sighting';
+import TopNavBar from '../navigation/NavBar';
 
 class AllSightings extends React.Component {
 
@@ -56,16 +57,16 @@ class AllSightings extends React.Component {
 
     render() {
         return (
-            <>
+            <div className="App">
                 <Sighting expandedSight={this.state.expandedSight} onSelectClear={this.clearSightSelection.bind(this)} />
-                <Container style={{ paddingTop: 30 }} fluid>
+                <Container style={{ paddingTop: 60 }} fluid>
                     <Row>
                         <Col style={{ paddingLeft: 0, paddingRight: 0 }}>
                             <Map userPos={this.state.userPos} sightings={this.state.filteredSights} onSightSelect={this.selectSighting.bind(this)} />
                         </Col>
                     </Row>
                 </Container>
-            </>
+            </div>
         );
     }
 }

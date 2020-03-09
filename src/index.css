@@ -26,14 +26,20 @@ code {
   padding: 0.25rem 1rem !important;
 }
 
+.navbar .nav-item {
+  padding: 0 0.5rem !important;
+  color: white;
+  cursor: pointer;
+}
+
+.navbar .nav-item:hover, .navbar .nav-item.active {
+  font-weight: bold;
+}
+
 .navbar-brand img {
   margin-top: 5px;
   margin-right: 5px;
 }
-
-/* .navbar-brand, .footer-logo {
-  font-family: 'Chocolate Drink';
-} */
 
 .navbar-brand {
   font-size: 1.5rem !important;

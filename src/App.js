@@ -1,32 +1,22 @@
 import React from 'react';
 import './App.css';
 import TopNavBar from './navigation/NavBar';
-import Sighting from './components/Sighting';
-import AllSightings from './pages/AllSightings';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 class App extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      allSightings: [],
-      filteredSights: [],
-      userPos: {
-        lat: 6.933073,
-        lng: 79.847517
-      },
-      expandedSight: {
-        location: {}
-      },
-      speciesFilterValue: -1,
-    };
-  }
 
   render() {
     return (
       <div className="App">
-        <TopNavBar />
-        <AllSightings />
+        <Container style={{ paddingTop: 60 }} fluid>
+          <Row>
+            <Col>
+              <h1>App</h1>
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }
