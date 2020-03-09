@@ -25,7 +25,8 @@ class History extends React.Component {
     }
 
     componentDidMount() {
-        firebase.firestore().collection("sightings").where("user", "==", this.props.user.uid).get()
+        const { user } = this.props;
+        firebase.firestore().collection("sightings").where("user", "==", user.uid).get()
             .then((querySnapshot) => {
                 var allSightings = [];
                 querySnapshot.forEach(doc => {
