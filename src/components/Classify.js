@@ -2,20 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Card, Form, Button, Row, Col } from 'react-bootstrap';
 import { classifySnake } from '../actions/classify';
+import ClassResults from './ClassResults';
 
 class Classify extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isSubmitting: false
-        }
-    }
-
     handleSubmit = (e) => {
-
         const { dispatch, user } = this.props;
-
         e.preventDefault();
 
         if (e.target.input.files.length) {
@@ -25,8 +17,7 @@ class Classify extends React.Component {
     }
 
     render() {
-        const { isSubmitting } = this.state;
-        const { isClassifying, classification } = this.props;
+        const { isClassifying, classification, classifyError } = this.props;
         return (
             <Card>
                 <Card.Body>
@@ -41,18 +32,21 @@ class Classify extends React.Component {
                             />
                         </Form.Group>
                         <div className="text-center">
-                            <Button variant="primary" type="submit" disabled={isSubmitting || isClassifying}>Submit</Button>
+                            <Button variant="primary" type="submit" disabled={isClassifying}>Submit</Button>
                         </div>
                     </Form>
                     {classification && classification.className &&
-                        <Row style={{ paddingTop: "2em" }}>
+                        <Row>
                             <Col>
-                                <ul className="class-results">
-                                    <li><strong>Species: </strong>{classification.className}</li>
-                                    <li><strong>Common name: </strong>{classification.commonName}</li>
-                                    <li><strong>Venomous: </strong>{classification.isVenomous}</li>
-                                    <li><strong>Confidence: </strong>{classification.confidence}</li>
-                                </ul>
+                                <ClassResults classification={classification} />
+                            </Col>
+                        </Row>
+                    }
+                    {
+                        classifyError && classifyError.message &&
+                        <Row>
+                            <Col>
+                                <p>{classifyError.message}</p>
                             </Col>
                         </Row>
                     }

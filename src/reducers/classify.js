@@ -29,7 +29,7 @@ export default (
             return {
                 ...state,
                 isClassifying: false,
-                classifyError: true
+                classifyError: action.error
             };
         default:
             return state;

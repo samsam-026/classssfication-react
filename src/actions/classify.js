@@ -15,9 +15,10 @@ const receiveClassification = classification => {
     };
 };
 
-const classificationError = () => {
+const classificationError = error => {
     return {
-        type: CLASSIFY_FAILURE
+        type: CLASSIFY_FAILURE,
+        error
     };
 };
 
@@ -28,15 +29,19 @@ export const classifySnake = (file, userId) => dispatch => {
     data.append('user', userId)
 
     fetch("https://fyp-classssfication.herokuapp.com/predict", {
-    // fetch("http://localhost:5000/predict", {
+        // fetch("http://localhost:5000/predict", {
         mode: "cors",
         method: "POST",
         body: data,
     }).then(response => response.json())
         .then(result => {
-            dispatch(receiveClassification({...result.data}));
+            if (!result.error) {
+                dispatch(receiveClassification({ ...result.data }));
+            } else {
+                dispatch(classificationError({ ...result.error }));
+            }
         })
         .catch(error => {
-            dispatch(classificationError());
+            dispatch(classificationError({ message: "An error has occured. Please try again later." }));
         });
 };
