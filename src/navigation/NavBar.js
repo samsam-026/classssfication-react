@@ -1,9 +1,10 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import logo from '../assets/images/logo.svg';
-import { Nav } from 'react-bootstrap';
+import { Nav, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
+import { logoutUser } from '../actions/auth';
 
 class TopNavBar extends React.Component {
 
@@ -17,6 +18,11 @@ class TopNavBar extends React.Component {
             home: "/"
         }
     }
+
+    handleLogout = () => {
+        const { dispatch } = this.props;
+        dispatch(logoutUser());
+    };
 
     render() {
         const { isAuthenticated } = this.props;
@@ -42,6 +48,9 @@ class TopNavBar extends React.Component {
                             var linkDest = "/" + link.toLowerCase();
                             return (<LinkContainer key={linkDest} to={linkDest}><Nav.Item>{link}</Nav.Item></LinkContainer>)
                         })
+                    }
+                    {
+                        isAuthenticated && <Button variant="secondary" onClick={this.handleLogout}>Logout</Button>
                     }
                 </Navbar.Collapse>
             </Navbar>

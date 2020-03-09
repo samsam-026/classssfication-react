@@ -2,27 +2,41 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { logoutUser } from '../actions/auth';
 import { connect } from 'react-redux';
+import { Nav, Card, Tabs, Tab } from 'react-bootstrap';
+import Classify from '../components/Classify';
+import History from '../components/History';
 
 class Home extends React.Component {
 
-    handleLogout = () => {
-        const { dispatch } = this.props;
-        dispatch(logoutUser());
-    };
+    constructor(props) {
+        super();
+        this.state = {
+            activeTab: props.activeTab || 1
+        };
+        this.handleSelect = this.handleSelect.bind(this);
+    }
+
+    handleSelect(selectedTab) {
+        this.setState({
+            activeTab: selectedTab
+        });
+    }
 
     render() {
-        const { isLoggingOut, logoutError } = this.props;
         return (
             <div>
                 <Container style={{ paddingTop: 60 }} fluid>
                     <Row>
-                        <Col>
-                            <h1>Home</h1>
-                            <button onClick={this.handleLogout}>Logout</button>
-                            {isLoggingOut && <p>Logging Out....</p>}
-                            {logoutError && <p>Error logging out</p>}
+                        <Col lg={{ span: 6, offset: 3 }} md={{ span: 8, offset: 2 }}>
+                            <Tabs fill className="myClass" activeKey={this.state.activeTab} onSelect={this.handleSelect}>
+                                <Tab eventKey={1} title="Classify Snake">
+                                    <Classify />
+                                </Tab>
+                                <Tab eventKey={2} title="History">
+                                    <History />
+                                </Tab>
+                            </Tabs>
                         </Col>
                     </Row>
                 </Container>

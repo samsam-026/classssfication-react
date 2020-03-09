@@ -22,8 +22,11 @@ const validationSchema = Yup.object().shape({
 class Login extends React.Component {
 
     render() {
-        const { isAuthenticated } = this.props;
+        const { isAuthenticated, user } = this.props;
         if (isAuthenticated) {
+            if (user.isAuth) {
+                return <Redirect to="/map" />;
+            }
             return <Redirect to="/" />;
         } else {
             return (
@@ -108,7 +111,8 @@ function mapStateToProps(state) {
     return {
         isLoggingIn: state.auth.isLoggingIn,
         loginError: state.auth.loginError,
-        isAuthenticated: state.auth.isAuthenticated
+        isAuthenticated: state.auth.isAuthenticated,
+        user: state.auth.user,
     };
 }
 export default connect(mapStateToProps)(Login);

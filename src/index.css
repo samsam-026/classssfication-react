@@ -187,42 +187,6 @@ code {
   background: #1B998B;
 }
 
-/* TAB STYLE */
-
-#bottomTabs.nav-tabs .nav-item {
-  width: 50%;
-}
-
-#bottomTabs .nav-item .btn {
-  border-radius: 0px !important;
-  width: 100%;
-  padding: 0.5em;
-  background-color: #1B998B;
-  color: white;
-}
-
-#bottomTabs .nav-item .btn.active {
-  background-color: #EC368D;
-}
-
-#bottomTabs {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  z-index: 100;
-}
-
-#bottomTabs .nav-item .btn.focus, #bottomTabs .nav-item .btn:focus {
-  box-shadow: 0 0 0 0.2rem rgba(236, 54, 141, .25);
-}
-
-@media (min-width: 768px) {
-  .tab-content>.tab-pane {
-    display: block !important;
-  }
-}
-
 /* RESTAURANT DETAIL CONTAINER */
 
 #restDetails {
@@ -381,10 +345,22 @@ code {
 
 /* ----------------- UTILS ----------------- */
 
-
-
 /* ----------------- CARDS ----------------- */
 
-.card-title {
-  text-align: center;
+.tab-content .card {
+  border-top-width: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.nav-tabs .nav-item.nav-link {
+  color: #1B998B;
+}
+
+.nav-tabs .nav-item.nav-link.active {
+  font-weight: bold;
+}
+
+.class-results{
+  list-style-type: none;
 }
