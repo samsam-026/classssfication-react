@@ -1,16 +1,15 @@
 import React from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Map from '../components/Map';
 import Sighting from '../components/Sighting';
+import { Card } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
 class AllSightings extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            allSightings: [],
             filteredSights: [],
             userPos: {
                 lat: 6.933073,
@@ -40,9 +39,8 @@ class AllSightings extends React.Component {
         }, { timeout: 20000 });
     }
 
-    selectSighting(id) {
-        let expandedSight = this.state.allSightings.find(sight => sight.id === id);
-
+    selectSighting(time) {
+        let expandedSight = this.props.history.find(sight => sight.time === time);
         this.setState({ expandedSight });
     }
 
@@ -55,19 +53,38 @@ class AllSightings extends React.Component {
     }
 
     render() {
+        const { history } = this.props;
+
         return (
-            <div className="App">
+            <>
                 <Sighting expandedSight={this.state.expandedSight} onSelectClear={this.clearSightSelection.bind(this)} />
-                <Container style={{ paddingTop: 60 }} fluid>
-                    <Row>
-                        <Col style={{ paddingLeft: 0, paddingRight: 0 }}>
-                            <Map userPos={this.state.userPos} sightings={this.state.filteredSights} onSightSelect={this.selectSighting.bind(this)} />
-                        </Col>
-                    </Row>
+                <Container style={{ paddingTop: 55 }} fluid>
+                    <div className="tab-content row" id="mapPage">
+                        <div role="tabpanel" className="tab-pane active col-md-6" style={{ paddingLeft: 0 }} id="mapTab">
+                            <Map userPos={this.state.userPos} sightings={history} onSightSelect={this.selectSighting.bind(this)} />
+                        </div>
+                        <div role="tabpanel" className="tab-pane col-md-6" id="chartTab">
+                            <Card id="chartCard"><Card.Body></Card.Body></Card>
+                        </div>
+                    </div>
+
+                    <ul data-role="navbar" className="nav nav-tabs d-md-none" id="bottomTabs" role="tablist">
+                        <li className="nav-item">
+                            <a className="btn active" href="#mapTab" aria-controls="mapTab" data-toggle="tab">Map</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="btn" href="#chartTab" aria-controls="chartTab" data-toggle="tab">List</a>
+                        </li>
+                    </ul>
                 </Container>
-            </div>
+            </>
         );
     }
 }
 
-export default AllSightings
+function mapStateToProps(state) {
+    return {
+        history: state.classify.history
+    };
+}
+export default connect(mapStateToProps)(AllSightings);

@@ -159,37 +159,37 @@ code {
     padding: 0 !important;
     padding-right: 10px !important;
   }
-  #restDetails #ratingDiv {
+  #sightDetails #ratingDiv {
     padding-right: 0;
   }
-  #restDetails #priceDiv {
+  #sightDetails #priceDiv {
     padding-left: 0;
   }
 }
 
 /* SCROLL BAR STYLE */
 
-#restaurantList::-webkit-scrollbar, #restScrollDetails::-webkit-scrollbar {
+#restaurantList::-webkit-scrollbar, #sightScrollDetails::-webkit-scrollbar {
   width: 5px;
 }
 
-#restaurantList::-webkit-scrollbar-track, #restScrollDetails::-webkit-scrollbar-track {
+#restaurantList::-webkit-scrollbar-track, #sightScrollDetails::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 15px;
 }
 
-#restaurantList::-webkit-scrollbar-thumb, #restScrollDetails::-webkit-scrollbar-thumb {
+#restaurantList::-webkit-scrollbar-thumb, #sightScrollDetails::-webkit-scrollbar-thumb {
   background: #aaaaaa;
   border-radius: 15px;
 }
 
-#restaurantList::-webkit-scrollbar-thumb:hover, #restScrollDetails::-webkit-scrollbar-thumb:hover {
+#restaurantList::-webkit-scrollbar-thumb:hover, #sightScrollDetails::-webkit-scrollbar-thumb:hover {
   background: #1B998B;
 }
 
 /* RESTAURANT DETAIL CONTAINER */
 
-#restDetails {
+#sightDetails {
   width: 59%;
   position: fixed;
   top: 0;
@@ -202,13 +202,13 @@ code {
   padding: 1.5em;
 }
 
-#restScrollDetails {
+#sightScrollDetails {
   height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-#restDetails.active {
+#sightDetails.active {
   left: 0;
 }
 
@@ -249,14 +249,14 @@ code {
   margin-bottom: 0.5rem;
 }
 
-#restDetails .btn.btn-outline-primary {
+#sightDetails .btn.btn-outline-primary {
   color: #EC368D;
   border-color: #EC368D;
   border-width: 2px;
   font-weight: 600;
 }
 
-#restDetails .btn.btn-outline-primary:hover {
+#sightDetails .btn.btn-outline-primary:hover {
   background-color: #EC368D;
   color: white;
 }
@@ -266,42 +266,12 @@ code {
 }
 
 @media (max-width: 767px) {
-  #restDetails {
+  #sightDetails {
     width: 100%;
     left: 100%;
   }
 }
 
-/* RATING MODAL STYLE */
-
-.star-rating {
-  color: #1B998B;
-}
-
-.modal-footer, .modal-header {
-  border-bottom: none !important;
-  border-top: none !important;
-}
-
-.modal-header .close {
-  font-size: 2em;
-  color: #1B998B !important;
-}
-
-.modal-header .close:hover {
-  color: #1B998B !important;
-  opacity: 1 !important;
-}
-
-#reviewModal .form-label, #restaurantModal .form-label {
-  text-align: right !important;
-}
-
-@media (max-width: 767px) {
-  #reviewModal .form-label, #restaurantModal .form-label {
-    text-align: left !important;
-  }
-}
 
 /* BUTTON STYLE */
 
@@ -316,11 +286,11 @@ code {
 }
 
 .btn-outline-primary.focus, .btn-outline-primary:focus {
-  box-shadow: 0 0 0 0.2rem rgba(236, 54, 141, .25) !important;
+  box-shadow: 0 0 0 0.2rem rgba(61, 163, 93, .25) !important;
 }
 
 .btn-primary.focus, .btn-primary:focus {
-  box-shadow: 0 0 0 0.2rem rgba(236, 54, 141, .25) !important;
+  box-shadow: 0 0 0 0.2rem rgba(61, 163, 93, .25) !important;
   background-color: #1B998B !important;
   border-color: #1B998B !important;
 }
@@ -341,6 +311,44 @@ code {
   height: 1em;
   position: absolute;
   font-size: .8em;
+}
+
+/* ----------------- TABS ----------------- */
+
+/* TAB STYLE */
+
+#bottomTabs.nav-tabs .nav-item {
+  width: 50%;
+}
+
+#bottomTabs .nav-item .btn {
+  border-radius: 0px !important;
+  width: 100%;
+  padding: 0.5em;
+  background-color: #1B998B;
+  color: white;
+}
+
+#bottomTabs .nav-item .btn.active {
+  background-color: #3DA35D;
+}
+
+#bottomTabs {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+}
+
+#bottomTabs .nav-item .btn.focus, #bottomTabs .nav-item .btn:focus {
+  box-shadow: 0 0 0 0.2rem rgba(61, 163, 93, .25);
+}
+
+@media (min-width: 768px) {
+  #mapPage.tab-content>.tab-pane {
+    display: block !important;
+  }
 }
 
 /* ----------------- UTILS ----------------- */
@@ -371,4 +379,10 @@ code {
   border-radius: 5px;
   margin-bottom: 0;
   margin-top: 1.5em;
+}
+
+#chartCard {
+  margin: 0.75em 0;
+  overflow-y: auto;
+  height: 87vh
 }

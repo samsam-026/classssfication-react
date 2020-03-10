@@ -80,10 +80,24 @@ export const classifySnake = (file, userId) => dispatch => {
 };
 
 export const getHistory = (user) => dispatch => {
-
     dispatch(requestHistory());
-    if (!user.isAuth) {
+    if (!user.isAuthority) {
         firebase.firestore().collection("sightings").where("user", "==", user.uid).get()
+            .then((querySnapshot) => {
+                var allSightings = [];
+                querySnapshot.forEach(doc => {
+                    var docData = doc.data();
+                    var classInfo = allClasses.find(classRes => classRes.classId === docData.classId);
+                    allSightings.push({ ...docData, ...classInfo })
+                });
+
+                dispatch(receiveHistory(allSightings));
+            })
+            .catch((error) => {
+                dispatch(historyError(error));
+            })
+    } else {
+        firebase.firestore().collection("sightings").where("showLoc", "==", true).get()
             .then((querySnapshot) => {
                 var allSightings = [];
                 querySnapshot.forEach(doc => {

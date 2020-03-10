@@ -10,18 +10,12 @@ const ProtectedRoute = ({
         <Route
             {...rest}
             render={props =>
-                isVerifying ? (
-                    <div />
-                ) : isAuthenticated ? (
-                    <Component {...props} />
-                ) : (
-                            <Redirect
-                                to={{
-                                    pathname: "/login",
-                                    state: { from: props.location }
-                                }}
-                            />
-                        )
+                isVerifying ?
+                    (<div />)
+                    : isAuthenticated ?
+                        (<Component {...props} />)
+                        : (<Redirect to={{ pathname: "/login", state: { from: props.location } }} />)
+
             }
         />
     );

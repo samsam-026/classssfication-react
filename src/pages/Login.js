@@ -24,14 +24,14 @@ class Login extends React.Component {
     render() {
         const { isAuthenticated, user } = this.props;
         if (isAuthenticated) {
-            if (user.isAuth) {
+            if (user.isAuthority) {
                 return <Redirect to="/map" />;
             }
             return <Redirect to="/" />;
         } else {
             return (
                 <div>
-                    <Container style={{ paddingTop: 60 }} fluid>
+                    <Container style={{ paddingTop: 65 }} fluid>
                         <Row>
                             <Col lg={{ span: 6, offset: 3 }} md={{ span: 8, offset: 2 }}>
                                 <Card className="card-form">

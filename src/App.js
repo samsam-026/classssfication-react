@@ -30,7 +30,7 @@ function App(props) {
           component={AllSightings}
           isAuthenticated={isAuthenticated}
           isVerifying={isVerifying}
-          isAuthority={user.isAuth}
+          isAuthority={user.isAuthority}
         />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />

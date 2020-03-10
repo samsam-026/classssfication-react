@@ -26,10 +26,10 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                <Container style={{ paddingTop: 60 }} fluid>
+                <Container style={{ paddingTop: 65 }} fluid>
                     <Row>
                         <Col lg={{ span: 6, offset: 3 }} md={{ span: 8, offset: 2 }}>
-                            <Tabs fill className="myClass" activeKey={this.state.activeTab} onSelect={this.handleSelect}>
+                            <Tabs fill justify className="myClass" activeKey={this.state.activeTab} onSelect={this.handleSelect}>
                                 <Tab eventKey={1} title="Classify Snake">
                                     <Classify />
                                 </Tab>

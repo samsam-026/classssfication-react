@@ -90,9 +90,11 @@ export const loginUser = (email, password) => dispatch => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(user => {
-      var userDetails = firebase.firestore().collection("user").doc(user.user.uid).get();
-      dispatch(receiveLogin({ ...user, ...userDetails }));
-      dispatch(getHistory({ ...user, ...userDetails }));
+      firebase.firestore().collection("users").doc(user.user.uid).get().then(doc => {
+        var userDetails = doc.data();
+        dispatch(receiveLogin({ ...user, ...userDetails }));
+        dispatch(getHistory({ ...user, ...userDetails }));
+      });
     })
     .catch(error => {
       dispatch(loginError());
@@ -105,10 +107,15 @@ export const signupUser = (firstName, surname, email, password) => dispatch => {
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(user => {
-      firebase.firestore().collection("user").doc(user.user.uid).set({
-        firstName, surname, email, isAuth: false
-      })
-      dispatch(receiveSignup({ ...user, firstName, surname, email, isAuth: false }));
+      var newUser = {
+        firstName,
+        surname,
+        email,
+        isAuthority: false,
+        uid: user.user.uid
+      }
+      firebase.firestore().collection("users").doc(user.user.uid).set(newUser);
+      dispatch(receiveSignup({ ...user, ...newUser }));
     })
     .catch(error => {
       dispatch(signupError());
@@ -134,9 +141,11 @@ export const verifyAuth = () => dispatch => {
     .auth()
     .onAuthStateChanged(user => {
       if (user !== null) {
-        var userDetails = firebase.firestore().collection("user").doc(user.uid).get();
-        dispatch(receiveLogin({ ...user, ...userDetails }));
-        dispatch(getHistory({ ...user, ...userDetails }));
+        firebase.firestore().collection("users").doc(user.uid).get().then(doc => {
+          var userDetails = doc.data();
+          dispatch(receiveLogin({ ...user, ...userDetails }));
+          dispatch(getHistory({ ...user, ...userDetails }));
+        });
       }
       dispatch(verifySuccess());
     });

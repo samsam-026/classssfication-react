@@ -10,28 +10,16 @@ const AuthorityRoute = ({
 }) => (
         <Route
             {...rest}
-            render={props =>
-                isVerifying ? (
-                    <div />
-                ) : isAuthenticated ?
-                        isAuthority ? (
-                            <Component {...props} />
-                        ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/",
-                                        state: { from: props.location }
-                                    }}
-                                />
-                            )
-                        : (
-                            <Redirect
-                                to={{
-                                    pathname: "/login",
-                                    state: { from: props.location }
-                                }}
-                            />
-                        )
+            render={
+                props =>
+                    isVerifying ?
+                        (<div />)
+                        : isAuthenticated ?
+                            isAuthority ?
+                                (<Component {...props} />)
+                                : (<Redirect to={{ pathname: "/", state: { from: props.location } }} />)
+                            : (<Redirect to={{ pathname: "/login", state: { from: props.location } }} />)
+
             }
         />
     );

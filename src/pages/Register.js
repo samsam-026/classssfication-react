@@ -40,7 +40,7 @@ class Register extends React.Component {
         } else {
             return (
                 <div >
-                    <Container style={{ paddingTop: 60 }} fluid>
+                    <Container style={{ paddingTop: 65 }} fluid>
                         <Row>
                             <Col lg={{ span: 6, offset: 3 }} md={{ span: 8, offset: 2 }}>
                                 <Card className="card-form">

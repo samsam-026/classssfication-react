@@ -8,9 +8,9 @@ class NotFound extends React.Component {
     render() {
         return (
             <div>
-                <Container style={{ paddingTop: 60 }} fluid>
+                <Container style={{ paddingTop: 65 }} fluid>
                     <Row>
-                        <Col>
+                        <Col className="text-center" style={{ margin: "auto" }}>
                             <h1>404 Not Found</h1>
                         </Col>
                     </Row>
