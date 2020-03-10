@@ -1,4 +1,5 @@
 import firebase from "../firebase";
+import { getHistory } from "./classify";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -91,6 +92,7 @@ export const loginUser = (email, password) => dispatch => {
     .then(user => {
       var userDetails = firebase.firestore().collection("user").doc(user.user.uid).get();
       dispatch(receiveLogin({ ...user, ...userDetails }));
+      dispatch(getHistory({ ...user, ...userDetails }));
     })
     .catch(error => {
       dispatch(loginError());
@@ -134,6 +136,7 @@ export const verifyAuth = () => dispatch => {
       if (user !== null) {
         var userDetails = firebase.firestore().collection("user").doc(user.uid).get();
         dispatch(receiveLogin({ ...user, ...userDetails }));
+        dispatch(getHistory({ ...user, ...userDetails }));
       }
       dispatch(verifySuccess());
     });
