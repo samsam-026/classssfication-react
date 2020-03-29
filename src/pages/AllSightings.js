@@ -2,8 +2,8 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Map from '../components/Map';
 import Sighting from '../components/Sighting';
-import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import Charts from '../components/Charts';
 
 class AllSightings extends React.Component {
 
@@ -64,7 +64,7 @@ class AllSightings extends React.Component {
                             <Map userPos={this.state.userPos} sightings={history} onSightSelect={this.selectSighting.bind(this)} />
                         </div>
                         <div role="tabpanel" className="tab-pane col-md-6" id="chartTab">
-                            <Card id="chartCard"><Card.Body></Card.Body></Card>
+                            <Charts barValues={this.props.barValues}/>
                         </div>
                     </div>
 
@@ -84,7 +84,8 @@ class AllSightings extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        history: state.classify.history
+        history: state.classify.history,
+        barValues: state.classify.barValues
     };
 }
 export default connect(mapStateToProps)(AllSightings);

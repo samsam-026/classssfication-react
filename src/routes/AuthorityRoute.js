@@ -6,13 +6,14 @@ const AuthorityRoute = ({
     isAuthenticated,
     isVerifying,
     isAuthority,
+    isLoggingIn,
     ...rest
 }) => (
         <Route
             {...rest}
             render={
                 props =>
-                    isVerifying ?
+                    isVerifying || isLoggingIn ?
                         (<div />)
                         : isAuthenticated ?
                             isAuthority ?

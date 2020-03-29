@@ -12,7 +12,7 @@ import NotFound from './pages/NotFound';
 import AuthorityRoute from "./routes/AuthorityRoute";
 
 function App(props) {
-  const { isAuthenticated, isVerifying, user } = props;
+  const { isAuthenticated, isVerifying, user, isLoggingIn } = props;
   return (
     <>
       <TopNavBar />
@@ -23,6 +23,7 @@ function App(props) {
           component={Home}
           isAuthenticated={isAuthenticated}
           isVerifying={isVerifying}
+          isLoggingIn={isLoggingIn}
         />
         <AuthorityRoute
           exact
@@ -31,6 +32,7 @@ function App(props) {
           isAuthenticated={isAuthenticated}
           isVerifying={isVerifying}
           isAuthority={user.isAuthority}
+          isLoggingIn={isLoggingIn}
         />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
@@ -44,6 +46,7 @@ function mapStateToProps(state) {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     isVerifying: state.auth.isVerifying,
+    isLoggingIn: state.auth.isLoggingIn,
     user: state.auth.user
   };
 }

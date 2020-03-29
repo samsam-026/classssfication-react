@@ -6,6 +6,9 @@ export const CLASSIFY_FAILURE = "CLASSIFY_FAILURE";
 export const HISTORY_REQUEST = "HISTORY_REQUEST";
 export const HISTORY_SUCCESS = "HISTORY_SUCCESS";
 export const HISTORY_FAILURE = "HISTORY_FAILURE";
+export const CHART_REQUEST = "CHART_REQUEST";
+export const CHART_SUCCESS = "CHART_SUCCESS";
+export const CHART_FAILURE = "CHART_FAILURE";
 
 const allClasses = [
     { classId: "1", className: "Nerodia Sipedon", commonName: "Northern water snake", isVenomous: false },
@@ -55,6 +58,26 @@ const historyError = error => {
     };
 };
 
+const requestChartValues = () => {
+    return {
+        type: CHART_REQUEST
+    };
+};
+
+const receiveChartValues = barValues => {
+    return {
+        type: CHART_SUCCESS,
+        barValues
+    };
+};
+
+const chartValueError = error => {
+    return {
+        type: CHART_FAILURE,
+        error
+    };
+};
+
 export const classifySnake = (file, userId) => dispatch => {
     dispatch(requestClassification());
     var data = new FormData()
@@ -99,17 +122,27 @@ export const getHistory = (user) => dispatch => {
     } else {
         firebase.firestore().collection("sightings").where("showLoc", "==", true).get()
             .then((querySnapshot) => {
-                var allSightings = [];
-                querySnapshot.forEach(doc => {
-                    var docData = doc.data();
-                    var classInfo = allClasses.find(classRes => classRes.classId === docData.classId);
-                    allSightings.push({ ...docData, ...classInfo })
+                var allSightings = querySnapshot.docs.map(doc => {
+                    return { ...doc.data(), ...allClasses.find(classRes => classRes.classId === doc.data().classId) }
                 });
 
                 dispatch(receiveHistory(allSightings));
+                dispatch(getChartValues())
             })
             .catch((error) => {
                 dispatch(historyError(error));
             })
     }
+}
+
+export const getChartValues = () => dispatch => {
+    dispatch(requestChartValues());
+    firebase.firestore().collection("authority-data").get()
+        .then((querySnapshot) => {
+            var barValues = querySnapshot.docs.map(doc => doc.data())
+            dispatch(receiveChartValues(barValues));
+        })
+        .catch((error) => {
+            dispatch(chartValueError(error));
+        })
 }

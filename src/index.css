@@ -190,10 +190,10 @@ code {
 /* RESTAURANT DETAIL CONTAINER */
 
 #sightDetails {
-  width: 59%;
+  width: 60%;
   position: fixed;
   top: 0;
-  left: -59%;
+  right: -60%;
   height: 100vh;
   z-index: 1040;
   background: white;
@@ -209,7 +209,7 @@ code {
 }
 
 #sightDetails.active {
-  left: 0;
+  right: 0;
 }
 
 .overlay {
@@ -268,10 +268,9 @@ code {
 @media (max-width: 767px) {
   #sightDetails {
     width: 100%;
-    left: 100%;
+    right: 100%;
   }
 }
-
 
 /* BUTTON STYLE */
 
@@ -385,4 +384,9 @@ code {
   margin: 0.75em 0;
   overflow-y: auto;
   height: 87vh
+}
+
+#imageRow {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
