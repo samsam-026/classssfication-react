@@ -11,6 +11,7 @@ class AllSightings extends React.Component {
         super(props);
         this.state = {
             filteredSights: [],
+            allSights: [],
             userPos: {
                 lat: 6.933073,
                 lng: 79.847517
@@ -18,17 +19,34 @@ class AllSightings extends React.Component {
             expandedSight: {
                 location: {}
             },
-            speciesFilterValue: -1,
+            speciesFilterValue: 0,
         }
     }
 
     componentDidMount() {
         this.setUserLocation();
-        // this.setSightings();
     }
 
-    setSightings() {
-        // TODO:
+    changeFilter(speciesFilterValue) {
+        this.setState({ speciesFilterValue });
+    }
+
+    getFilteredBarValues(barValues) {
+        const { speciesFilterValue } = this.state;
+        if (speciesFilterValue > 0) {
+            var filteredList = barValues.filter(bar => bar.classId == speciesFilterValue)
+            return filteredList
+        }
+        return barValues
+    }
+
+    getFilteredList(history) {
+        const { speciesFilterValue } = this.state;
+        if (speciesFilterValue > 0) {
+            var filteredList = history.filter(sight => sight.classId == speciesFilterValue)
+            return filteredList
+        }
+        return history
     }
 
     setUserLocation() {
@@ -53,7 +71,10 @@ class AllSightings extends React.Component {
     }
 
     render() {
-        const { history } = this.props;
+        const { history, barValues } = this.props;
+
+        var filteredList = this.getFilteredList(history);
+        var filteredBarValues = this.getFilteredBarValues(barValues)
 
         return (
             <>
@@ -61,10 +82,10 @@ class AllSightings extends React.Component {
                 <Container style={{ paddingTop: 55 }} fluid>
                     <div className="tab-content row" id="mapPage">
                         <div role="tabpanel" className="tab-pane active col-md-6" style={{ paddingLeft: 0 }} id="mapTab">
-                            <Map userPos={this.state.userPos} sightings={history} onSightSelect={this.selectSighting.bind(this)} />
+                            <Map userPos={this.state.userPos} sightings={filteredList} onSightSelect={this.selectSighting.bind(this)} />
                         </div>
                         <div role="tabpanel" className="tab-pane col-md-6" id="chartTab">
-                            <Charts barValues={this.props.barValues}/>
+                            <Charts barValues={filteredBarValues} onFilterChange={this.changeFilter.bind(this)} />
                         </div>
                     </div>
 
