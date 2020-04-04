@@ -2,7 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Card, Form, Spinner } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { signupUser } from '../actions/auth';
@@ -142,9 +142,9 @@ class Register extends React.Component {
                                                             ) : null}
                                                         </Form.Group>
                                                         <div className="text-center">
-                                                            <Button variant="primary" type="submit" disabled={isSubmitting}>
-                                                                Submit
-                                                        </Button>
+                                                            {isSubmitting ? <Spinner animation="border" variant="primary" /> :
+                                                                <Button variant="primary" type="submit" disabled={isSubmitting}>Submit</Button>
+                                                            }
                                                         </div>
                                                     </Form>
                                                 )}

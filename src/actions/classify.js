@@ -78,6 +78,28 @@ const chartValueError = error => {
     };
 };
 
+const uploadImage = ({ userId, processedImage, time, ...data }) => dispatch => {
+    urltoFile('data:image/jpeg;base64,' + processedImage, 'tempimage.jpeg', 'image/jpeg')
+        .then((file) => {
+            let filename = time + ".jpeg";
+            const uploadTask = firebase.storage().ref(`${userId}/${filename}`).put(file)
+            uploadTask.on('state_changed',
+                (snapShot) => { },
+                (err) => { },
+                () => {
+                    firebase.storage().ref(userId).child(filename).getDownloadURL()
+                        .then(imageUrl => {
+                            firebase.firestore().collection("sightings").doc(time).update({
+                                imageUrl
+                            }).then(() => {
+                                dispatch(receiveClassification({ imageUrl, time, ...data }));
+                            }).catch(error => { })
+                        })
+                })
+        });
+
+}
+
 export const classifySnake = (file, userId) => dispatch => {
     dispatch(requestClassification());
     var data = new FormData()
@@ -92,7 +114,7 @@ export const classifySnake = (file, userId) => dispatch => {
     }).then(response => response.json())
         .then(result => {
             if (!result.error) {
-                dispatch(receiveClassification({ ...result.data }));
+                dispatch(uploadImage({ userId, ...result.data }));
             } else {
                 dispatch(classificationError({ ...result.error }));
             }
@@ -105,7 +127,7 @@ export const classifySnake = (file, userId) => dispatch => {
 export const getHistory = (user) => dispatch => {
     dispatch(requestHistory());
     if (!user.isAuthority) {
-        firebase.firestore().collection("sightings").where("user", "==", user.uid).get()
+        firebase.firestore().collection("sightings").orderBy("time", "desc").where("user", "==", user.uid).get()
             .then((querySnapshot) => {
                 var allSightings = [];
                 querySnapshot.forEach(doc => {
@@ -145,4 +167,11 @@ export const getChartValues = () => dispatch => {
         .catch((error) => {
             dispatch(chartValueError(error));
         })
+}
+
+function urltoFile(url, filename, mimeType) {
+    return (fetch(url)
+        .then(function (res) { return res.arrayBuffer(); })
+        .then(function (buf) { return new File([buf], filename, { type: mimeType }); })
+    );
 }

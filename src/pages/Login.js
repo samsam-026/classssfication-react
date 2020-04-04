@@ -2,7 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Card, Form, Button } from 'react-bootstrap';
+import { Card, Form, Button, Spinner } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { loginUser } from '../actions/auth';
@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
 class Login extends React.Component {
 
     render() {
-        const { isAuthenticated, user } = this.props;
+        const { isAuthenticated, user, isVerifying } = this.props;
         if (isAuthenticated) {
             if (user.isAuthority) {
                 return <Redirect to="/map" />;
@@ -89,9 +89,7 @@ class Login extends React.Component {
                                                         </Form.Group>
 
                                                         <div className="text-center">
-                                                            <Button variant="primary" type="submit" disabled={isSubmitting}>
-                                                                Submit
-                                                        </Button>
+                                                            {isSubmitting || isVerifying ? <Spinner animation="border" variant="primary"  /> : <Button variant="primary" type="submit" disabled={isSubmitting}>Submit</Button>}
                                                         </div>
                                                     </Form>
                                                 )}
@@ -110,6 +108,7 @@ class Login extends React.Component {
 function mapStateToProps(state) {
     return {
         isLoggingIn: state.auth.isLoggingIn,
+        isVerifying: state.auth.isVerifying,
         loginError: state.auth.loginError,
         isAuthenticated: state.auth.isAuthenticated,
         user: state.auth.user,

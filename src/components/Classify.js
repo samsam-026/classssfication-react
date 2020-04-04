@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Card, Form, Button, Row, Col } from 'react-bootstrap';
+import { Card, Form, Button, Row, Col, Spinner } from 'react-bootstrap';
 import { classifySnake } from '../actions/classify';
 import ClassResults from './ClassResults';
 
@@ -32,7 +32,7 @@ class Classify extends React.Component {
                             />
                         </Form.Group>
                         <div className="text-center">
-                            <Button variant="primary" type="submit" disabled={isClassifying}>Submit</Button>
+                            {isClassifying ? <Spinner animation="border" variant="primary" /> : <Button variant="primary" type="submit" disabled={isClassifying}>Submit</Button>}
                         </div>
                     </Form>
                     {classification && classification.className &&

@@ -34,7 +34,7 @@ class Sighting extends React.Component {
                         </Col>
                     </Row>
                     <div id="sightScrollDetails">
-                        <ClassResults classification={expandedSight} />
+                        {expandedSight && expandedSight.classId && <ClassResults classification={expandedSight} />}
                     </div>
                 </Container>
                 <div className={"overlay " + activeClass} onClick={this.handleClear} />
