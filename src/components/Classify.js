@@ -9,29 +9,33 @@ class Classify extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            file: null
+            file: null,
+            fileURL: null
         }
     }
 
     handleSubmit = (e) => {
         const { dispatch, user } = this.props;
+        const { file } = this.state;
         e.preventDefault();
 
-        if (e.target.input.files.length) {
-            const upload_file = e.target.input.files[0];
-            dispatch(classifySnake(upload_file, user.uid))
+        if (file) {
+            dispatch(classifySnake(file, user.uid))
+        }else{
+            alert("Please add an image to classify.");
         }
     }
 
     handleFileChange(event) {
         this.setState({
-            file: URL.createObjectURL(event.target.files[0])
+            fileURL: URL.createObjectURL(event.target.files[0]),
+            file: event.target.files[0]
         })
     }
 
     render() {
         const { isClassifying, classification, classifyError } = this.props;
-        const { file } = this.state;
+        const { fileURL } = this.state;
         return (
             <Card>
                 <Card.Body>
@@ -51,7 +55,7 @@ class Classify extends React.Component {
                             </Col>
                             <Col lg={4} >
                                 {
-                                    file && <Image src={file} fluid />
+                                    fileURL && <Image src={fileURL} fluid />
                                 }
                             </Col>
                         </Row>

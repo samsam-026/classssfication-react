@@ -38,10 +38,12 @@ export default (
                 classifyError: {}
             };
         case CLASSIFY_SUCCESS:
+            let newHistory = [action.classification, ...state.history];
             return {
                 ...state,
                 isClassifying: false,
-                classification: action.classification
+                classification: action.classification,
+                history: newHistory
             };
         case CLASSIFY_FAILURE:
             return {

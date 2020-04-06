@@ -2,8 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Card } from 'react-bootstrap';
 import ClassResults from './ClassResults';
+import { getHistory } from '../actions/classify';
 
 class History extends React.Component {
+
+    componentDidMount() {
+        const { dispatch, user } = this.props;
+
+        dispatch(getHistory(user));
+    }
 
     render() {
         const { history } = this.props;
@@ -31,7 +38,8 @@ class History extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        history: state.classify.history
+        history: state.classify.history,
+        user: state.auth.user
     };
 }
 export default connect(mapStateToProps)(History);
