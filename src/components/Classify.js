@@ -1,10 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Card, Form, Button, Row, Col, Spinner } from 'react-bootstrap';
+import { Card, Form, Button, Row, Col, Spinner, Image } from 'react-bootstrap';
 import { classifySnake } from '../actions/classify';
 import ClassResults from './ClassResults';
 
 class Classify extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            file: null
+        }
+    }
 
     handleSubmit = (e) => {
         const { dispatch, user } = this.props;
@@ -16,25 +23,42 @@ class Classify extends React.Component {
         }
     }
 
+    handleFileChange(event) {
+        this.setState({
+            file: URL.createObjectURL(event.target.files[0])
+        })
+    }
+
     render() {
         const { isClassifying, classification, classifyError } = this.props;
+        const { file } = this.state;
         return (
             <Card>
                 <Card.Body>
                     <h2>Classify</h2>
                     <Form onSubmit={this.handleSubmit}>
-                        <Form.Group controlId="formFile">
-                            <Form.Label>Image File</Form.Label>
-                            <Form.Control
-                                type="file"
-                                name="input"
-                                placeholder="Choose image"
-                            />
-                        </Form.Group>
+                        <Row>
+                            <Col lg={8} >
+                                <Form.Group controlId="formFile">
+                                    <Form.Label>Image File</Form.Label>
+                                    <Form.Control
+                                        type="file"
+                                        placeholder="Choose image"
+                                        onChange={this.handleFileChange.bind(this)}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col lg={4} >
+                                {
+                                    file && <Image src={file} fluid />
+                                }
+                            </Col>
+                        </Row>
                         <div className="text-center">
                             {isClassifying ? <Spinner animation="border" variant="primary" /> : <Button variant="primary" type="submit" disabled={isClassifying}>Submit</Button>}
                         </div>
                     </Form>
+
                     {classification && classification.className &&
                         <Row>
                             <Col>
