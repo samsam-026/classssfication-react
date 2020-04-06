@@ -43,6 +43,7 @@ class Classify extends React.Component {
                                     <Form.Label>Image File</Form.Label>
                                     <Form.Control
                                         type="file"
+                                        name="input"
                                         placeholder="Choose image"
                                         onChange={this.handleFileChange.bind(this)}
                                     />
