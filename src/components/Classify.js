@@ -39,7 +39,7 @@ class Classify extends React.Component {
         return (
             <Card>
                 <Card.Body>
-                    <h2>Classify</h2>
+                    <h2>Identify</h2>
                     <Form onSubmit={this.handleSubmit}>
                         <Row>
                             <Col lg={8} >
